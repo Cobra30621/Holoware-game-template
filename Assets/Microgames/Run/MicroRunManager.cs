@@ -1,10 +1,8 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class MicroRun : Microgame
+public class MicroRunManager : MonoBehaviour
 {
     public SFXManager sfx;
     public MicroRunPlayer player;
@@ -15,6 +13,13 @@ public class MicroRun : Microgame
     int playerID, spawnID;
     float spawnX;
 
+    // Every MicroGame Method
+    [HideInInspector] public BGMManager bgm;
+    public float start_time = 10;
+    public float timer; 
+    public bool cleared; // a microgame is considered cleared if cleared = true
+    public bool timeOver; // once set to true, the microgame will exit
+
     public void Start()
     {
         spawnX = firstSpawnPosition;
@@ -24,9 +29,29 @@ public class MicroRun : Microgame
             Instantiate(spawnObjects[spawnID].spawnObject, new Vector2(spawnX, 0), Quaternion.identity, transform);
             spawnX += spawnObjects[spawnID].intervalToNextSpawn + Random.Range(0, spawnIntervalVariation);
         }
-        onStart.AddListener(Game);
+        
+        cleared = false;
+        bgm = GetComponent<BGMManager>();
+        timer = start_time;
+        Game();
     }
 
+     // Update is called once per frame
+    void Update()
+    {
+        Countdown();
+    }
+
+    void Countdown(){
+        if(timeOver){return;}
+
+        timer -= Time.deltaTime;
+        if(timer < 0){
+            timeOver = true;
+        }
+    }
+
+    [ContextMenu("Game Start")]
     public void Game()
     {
         playerID = Random.Range(0, sets.Length);
@@ -35,8 +60,15 @@ public class MicroRun : Microgame
         player.slideSprite = sets[playerID].slide;
         player.failSprite = sets[playerID].fail;
         player.spriteRenderer.sprite = player.runSprite;
-        AddAvatar(playerID);
         bgm.PlayBGM(0);
+    }
+
+    [ContextMenu("Game End")]
+    public void End(){
+        if(cleared)
+            Debug.Log("Game End : Win");
+        else
+            Debug.Log("Game End : Lose");
     }
 
     [System.Serializable]
@@ -52,3 +84,4 @@ public class MicroRun : Microgame
         public float intervalToNextSpawn;
     }
 }
+
