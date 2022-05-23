@@ -1,19 +1,17 @@
-﻿namespace Micro.Draw
+﻿
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MicroDrawNode : MonoBehaviour
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
+    [HideInInspector] public MicroDrawManager microgame;
+    bool covered;
 
-    public class MicroDrawNode : MonoBehaviour
+    public void CoverNode()
     {
-        [HideInInspector] public MicroDraw microgame;
-        bool covered;
-
-        public void CoverNode()
-        {
-            if (covered) return;
-            microgame.nodesCovered++;
-            covered = true;
-        }
+        if (covered) return;
+        microgame.nodesCovered++;
+        covered = true;
     }
 }

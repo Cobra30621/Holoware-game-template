@@ -366,7 +366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
   bgmList:
-  - {fileID: 8300000, guid: 9e7da4e2320a7bb4a91c0f402bd44ce0, type: 3}
+  - {fileID: 8300000, guid: a2b48325c9bce3e419d97bb6db05aca6, type: 3}
   playOnAwake: 0
   playRandom: 0
   index: 0

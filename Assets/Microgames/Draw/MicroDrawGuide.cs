@@ -1,22 +1,20 @@
-﻿namespace Micro.Draw
+﻿
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MicroDrawGuide : MonoBehaviour
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
+    [HideInInspector] public MicroDrawManager microgame;
 
-    public class MicroDrawGuide : MonoBehaviour
+    public void NodePrep()
     {
-        [HideInInspector] public MicroDraw microgame;
-
-        public void NodePrep()
+        MicroDrawNode[] nodes = GetComponentsInChildren<MicroDrawNode>();
+        microgame.nodeAmount = nodes.Length;
+        for (int i = 0; i < nodes.Length; i++)
         {
-            MicroDrawNode[] nodes = GetComponentsInChildren<MicroDrawNode>();
-            microgame.nodeAmount = nodes.Length;
-            for (int i = 0; i < nodes.Length; i++)
-            {
-                nodes[i].microgame = microgame;
-                nodes[i].transform.localScale = Vector3.one * microgame.nodeSize;
-            }
+            nodes[i].microgame = microgame;
+            nodes[i].transform.localScale = Vector3.one * microgame.nodeSize;
         }
     }
 }

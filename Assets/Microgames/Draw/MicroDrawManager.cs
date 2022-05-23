@@ -1,9 +1,8 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MicroDraw : Microgame
+public class MicroDrawManager : MonoBehaviour
 {
     public SFXManager sfx;
     public AudioSource pencilSfx;
@@ -14,18 +13,43 @@ public class MicroDraw : Microgame
     [HideInInspector] public int nodeAmount, nodesCovered;
     int vertAmount, accurateVertAmount;
 
+    // Every MicroGame Method
+    [HideInInspector] public BGMManager bgm;
+    public float start_time = 10;
+    public float timer; 
+    public bool cleared; // a microgame is considered cleared if cleared = true
+    public bool timeOver; // once set to true, the microgame will exit; must be set manually if useStandardTimer = false
+
+
+    // Start is called before the first frame update
     void Start()
     {
         MicroDrawGuide guide = Instantiate(guides[Random.Range(0, guides.Length)], transform).GetComponent<MicroDrawGuide>();
-        if (GameSettings.hardMode == 1) guide.transform.eulerAngles = new Vector3(0, 0, Random.Range(0f, 360f));
-        // guide.microgame = this;
+        guide.microgame = this;
         guide.NodePrep();
-        onStart.AddListener(Game);
+
+        bgm = GetComponent<BGMManager>();
+        timer = start_time;
+        Game();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Countdown();
+    }
+
+    void Countdown(){
+        if(timeOver){return;}
+
+        timer -= Time.deltaTime;
+        if(timer < 0){
+            timeOver = true;
+        }
     }
 
     public void Game()
     {
-        AddAvatar(0);
         bgm.PlayBGM(0);
         StartCoroutine(GameCoroutine());
     }
@@ -77,7 +101,6 @@ public class MicroDraw : Microgame
             }
             if ((Utils.GetMousePosition() - lastPosition).magnitude >= minStrokeLength)
             {
-                pencilSfx.volume = GameSettings.sfxVolume;
                 pencilSfxTimer = pencilSfxMinTime;
                 lineRenderer.positionCount++;
                 lineRenderer.SetPosition(lineRenderer.positionCount - 1, Utils.GetMousePosition());
@@ -110,8 +133,14 @@ public class MicroDraw : Microgame
         if ((float)nodesCovered / nodeAmount >= minNodeCoverage && (float)accurateVertAmount / vertAmount >= minLineAccuracy)
         {
             cleared = true;
-            avatars[0].SetExpression(1);
             sfx.PlaySFX(0);
+            End();
         }
     }
+
+    [ContextMenu("Game End")]
+    public void End(){
+        Debug.Log("Game End");
+    }
 }
+
