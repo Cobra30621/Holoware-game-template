@@ -10,11 +10,11 @@ using UnityEngine;
 
 public class MicroClimbManager : MonoBehaviour
 {
-    
-    public BGMManager bgm;
     public SFXManager sfx;
     public GameObject player;
 
+    // Every MicroGame Method
+    [HideInInspector] public BGMManager bgm;
     public float start_time = 10;
     public float timer; 
     public bool cleared; // a microgame is considered cleared if cleared = true
@@ -32,7 +32,6 @@ public class MicroClimbManager : MonoBehaviour
     {
         Countdown();
     }
-
 
     void Countdown(){
         if(timeOver){return;}
