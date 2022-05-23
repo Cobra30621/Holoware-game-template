@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class MicroClimbPlayer : MonoBehaviour
 {
-    public MicroClimb microgame;
     public MicroClimbManager microClimbManager;
     public SFXManager sfx;
     public Rigidbody2D mainRb, hingeRb, maceRb;
