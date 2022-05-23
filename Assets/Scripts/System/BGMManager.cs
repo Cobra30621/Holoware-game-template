@@ -33,7 +33,7 @@ public class BGMManager : MonoBehaviour
 
     void Update()
     {
-        audioSource.volume = GameSettings.bgmVolume;
+        // audioSource.volume = GameSettings.bgmVolume;
     }
 
     // play BGM at specified index

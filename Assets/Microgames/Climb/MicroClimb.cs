@@ -1,25 +1,23 @@
-﻿namespace Micro.Climb
+﻿
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class MicroClimb : Microgame
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
-    using UnityEngine.UI;
+    public SFXManager sfx;
+    public GameObject player;
 
-    public class MicroClimb : Microgame
+    public void Start()
     {
-        public SFXManager sfx;
-        public GameObject player;
+        onStart.AddListener(Game);
+    }
 
-        public void Start()
-        {
-            onStart.AddListener(Game);
-        }
-
-        public void Game()
-        {
-            player.SetActive(true);
-            AddAvatar(0);
-            bgm.PlayBGM(0);
-        }
+    public void Game()
+    {
+        player.SetActive(true);
+        AddAvatar(0);
+        bgm.PlayBGM(0);
     }
 }
