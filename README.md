@@ -1,29 +1,36 @@
 # Holoware
+## Intro
 ***Holoware / メイドインホロ*** is a WarioWare-inspired *hololive* fangame featuring its various virtual YouTuber talents. 
+You can play it in itch.io : https://tiannya.itch.io/holoware
 
-This project was developed in **Unity 2019.4.11f1** using C#.
+The author of Holoware is @tian-nya who prove public repository if anyone would like to make your own modifications : https://github.com/tian-nya/Holoware
 
-### Creating microgames
+## Holoware help game development
+Holoware contains 20 microgames and 3 boss stages. 
+I cam study the existing microgames to get a sense of their structure.
+It's really helpful for my game development.
 
-The following scripts are an integral part of developing microgames:
-- **[Microgame.cs](Assets/Scripts/System/Microgame.cs)**
-- **[BGMManager.cs](Assets/Scripts/System/BGMManager.cs)**
-- **[SFXManager.cs](Assets/Scripts/System/SFXManager.cs)**
-- **[CharacterAvatar.cs](Assets/Scripts/UI/CharacterAvatar.cs)**
+To make the microgame in Holoware easlier to port to other game project, I want to make all Micro game to Unity package.
 
-Comments are provided in those scripts to help with the process. Please study the existing microgames to get a sense of their structure. I recommend starting off by duplicating an existing microgame.
 
-Scripts in the [Assets/Scripts/Utilities](Assets/Scripts/Utilities) folder may make the process easier, but they are not necessary.
+## How to Use
 
-All assets exclusive to one microgame should be stored in a subfolder of [Assets/Microgames](Assets/Microgames). Microgame content is stored in a prefab with the microgame main script attached.
+1. Download Unity (This project was developed in **Unity 2019.4.11f1** using C#.)
+2. Find the Micro game is in  [Assets/MicroGamePackage](Assets/MicroGamePackage)
+3. Choice the game you want, and import Unity package to Unity. 
+find how to use Unity package.
 
-The main script for a microgame inherits Microgame.cs. See [MicroPlaceholder.cs](Assets/Microgames/Placeholder/MicroPlaceholder.cs) and [MicroClimb.cs](Assets/Microgames/Climb/MicroClimb.cs) for basic examples of microgame main scripts.
 
-To test a microgame, replace the Microgame and/or Hard Microgame fields in **Assets/Microgames/MicrogamePoolTest.asset**, then run the **Testing** scene (Assets/Scenes/Testing.unity).
+## MicroGame
+I had already finished 5(23) microgame Unity package.
+[Assets/MicroGamePackage](Assets/MicroGamePackage)
 
-Some things to be aware of:
-- All scripts exclusive to a microgame should be organized under the namespace **Micro.<microgame name>**.
-- Instantiated game objects must be children of the microgame transform, such that they are removed once the microgame is destroyed.
+- ASMR : Find the right position and click.
+- Climb : Refer to [Getting Over It with Bennett Foddy](https://store.steampowered.com/app/240720/Getting_Over_It_with_Bennett_Foddy/?l=tchinese)
+- Draw : Draw line game.
+- Run : Refer to Dinosaur Game
+- Solve: Math game
+    - remind : need to download TMP importer
 
 ## License
 
@@ -31,4 +38,5 @@ Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International: https:/
 
 Adhere to hololive Derivative Works Guidelines: https://en.hololive.tv/terms
 
-© 2020 tian nya
+
+
