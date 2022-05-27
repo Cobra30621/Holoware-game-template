@@ -7,7 +7,7 @@ The author of Holoware is @tian-nya who prove public repository if anyone would 
 
 ## Holoware help game development
 Holoware contains 20 microgames and 3 boss stages. 
-I cam study the existing microgames to get a sense of their structure.
+I can study the existing microgames to get a sense of their structure.
 It's really helpful for my game development.
 
 To make the microgame in Holoware easlier to port to other game project, I want to make all Micro game to Unity package.
@@ -16,9 +16,14 @@ To make the microgame in Holoware easlier to port to other game project, I want 
 ## How to Use
 
 1. Download Unity (This project was developed in **Unity 2019.4.11f1** using C#.)
-2. Find the Micro game is in  [Assets/MicroGamePackage](Assets/MicroGamePackage)
-3. Choice the game you want, and import Unity package to Unity. 
-find how to use Unity package.
+2. Find the Micro game is in  [Assets/MicroGamePackage](Assets/MicroGamePackage) and download it.
+![](https://i.imgur.com/bcs5yWk.png)
+3. Choice the game you want, and import Unity package to your Unity Project. 
+    - Tutorial : [Importing local asset packages](https://docs.unity3d.com/Manual/AssetPackagesImport.html)
+![](https://i.imgur.com/JaU3xi4.png)
+4. You can study the micro game in your Unity Project.
+![](https://i.imgur.com/raBmHSn.png)
+
 
 
 ## MicroGame
@@ -33,6 +38,7 @@ I had already finished 5(23) microgame Unity package.
     - remind : need to download TMP importer
 
 ## License
+
 
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International: https://creativecommons.org/licenses/by-nc-sa/4.0/
 
