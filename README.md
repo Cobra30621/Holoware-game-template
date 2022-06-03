@@ -3,7 +3,7 @@
 ***Holoware / メイドインホロ*** is a WarioWare-inspired *hololive* fangame featuring its various virtual YouTuber talents. 
 You can play it in itch.io : https://tiannya.itch.io/holoware
 
-The author of Holoware is @tian-nya who prove public repository if anyone would like to make your own modifications : https://github.com/tian-nya/Holoware
+The author of Holoware is [tian-nya](https://github.com/tian-nya) who prove public repository if anyone would like to make your own modifications : https://github.com/tian-nya/Holoware
 
 ## Holoware help game development
 Holoware contains 20 microgames and 3 boss stages. 
