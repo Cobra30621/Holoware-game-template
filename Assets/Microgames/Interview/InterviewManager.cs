@@ -1,13 +1,19 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Lean.Localization;
 
-public class BossInterview : Microgame
+public class InterviewManager : MonoBehaviour
 {
+        // Every MicroGame Method
+    [HideInInspector] public BGMManager bgm;
+    public float start_time = 10;
+    public float timer; 
+    public bool cleared; // a microgame is considered cleared if cleared = true
+    public bool timeOver; // once set to true, the microgame will exit
+
     public SFXManager sfx;
     public float bpm = 136, safeBeats = 0.5f;
     public int lives = 3;
@@ -22,22 +28,42 @@ public class BossInterview : Microgame
     int nextEventBeat, correctAnswerIndex, correctCharacterIndex;
     List<CharacterAvatar> buttonAvatars;
     List<int> setPool, availableCharacters, choices;
-    bool canSelect;
+    public bool canSelect;
 
+    // Start is called before the first frame update
     void Start()
     {
         buttonAvatars = new List<CharacterAvatar>();
         setPool = Utils.GenerateIndexPool(speechSetArray.sets.Length);
         availableCharacters = Utils.GenerateIndexPool(speechSetArray.sets.Length);
-        onStart.AddListener(Game);
+
+
+        bgm = GetComponent<BGMManager>();
+        timer = start_time;
+        Game();
     }
 
-    public void Game()
+    // Update is called once per frame
+    void Update()
     {
+        // Countdown();
+    }
+
+    void Countdown(){
+        if(timeOver){return;}
+
+        timer -= Time.deltaTime;
+        if(timer < 0){
+            timeOver = true;
+        }
+    }
+
+    [ContextMenu("Game Start")]
+    public void Game(){
         matsuriAnimator.speed = bpm / 60f;
         SetNextEventTime(4);
         livesDisp.text = lives.ToString();
-        AddAvatar(0);
+
         bgm.PlayBGM(0);
         StartCoroutine(GameCoroutine());
     }
@@ -89,7 +115,6 @@ public class BossInterview : Microgame
         canSelect = false;
         if (lives == 0)
         {
-            avatars[0].SetExpression(2);
             matsuriAnimator.SetTrigger("fail");
             SetMatsuriText("Interview/Fail", true, true);
             failFXTimer = 3f;
@@ -135,7 +160,6 @@ public class BossInterview : Microgame
         canSelect = false;
         if (lives == 0)
         {
-            avatars[0].SetExpression(2);
             matsuriAnimator.SetTrigger("fail");
             SetMatsuriText("Interview/Fail", true, true);
             failFXTimer = 3f;
@@ -151,7 +175,6 @@ public class BossInterview : Microgame
         cleared = true;
         SetMatsuriText("Interview/End", true, false);
         sfx.PlaySFX(0);
-        avatars[0].SetExpression(1);
         matsuriAnimator.SetTrigger("win");
         yield return new WaitForSeconds(3f);
         timeOver = true;
@@ -198,7 +221,6 @@ public class BossInterview : Microgame
 
     public void CheckAnswer(int buttonIndex)
     {
-        Debug.Log("Check" + buttonIndex);
         if (!canSelect) return;
         avatarBubbles[buttonIndex].transform.parent.gameObject.SetActive(true);
         avatarBubbles[buttonIndex].text = LeanLocalization.GetTranslationText("Interview/" + speechSetArray.sets[choices[buttonIndex]].name + "_Greeting_" + Random.Range(0, speechSetArray.sets[choices[buttonIndex]].numberOfLines));
@@ -235,5 +257,13 @@ public class BossInterview : Microgame
             matsuriSpeech2.text = localize ? LeanLocalization.GetTranslationText(text) : text;
             matsuriSpeech1.text = "";
         }
+    }
+
+    [ContextMenu("Game End")]
+    public void End(){
+        if(cleared)
+            Debug.Log("Game End : Win");
+        else
+            Debug.Log("Game End : Lose");
     }
 }
