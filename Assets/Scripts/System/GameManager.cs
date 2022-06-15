@@ -35,6 +35,11 @@ public class GameManager : MonoBehaviour
     public bool microgameCleared;
     int lastGameIndex, lastBossIndex;
 
+    // 指定遊玩某款小遊戲
+    public bool isAppoint; // 是否指定某款小遊戲
+    public Microgame testGame; // 拉入要指定的小遊戲 Prefab 
+    public MicrogameData.MicrogameType testType; // 顯示遊玩方式(鍵盤、滑鼠)
+
     /*
     [Header("Events")]
     public UnityEvent onPause;
@@ -234,53 +239,62 @@ public class GameManager : MonoBehaviour
 
         while (lives > 0)
         {
-            // Handle speed up, microgame/boss loading
-            if (points > 0 && points % bossInterval == 0)
-            {
-                yield return new WaitForSeconds(beatLength * 4);
-                SetGameSpeed((GameSettings.hardMode == 1 ? hardModeBossSpeed : 1f) + ((GameSettings.hardMode == 1 ? bossSpeedUpAddHard : bossSpeedUpAdd) * bossesCleared));
-                skin.boss.Invoke();
-                skin.animator.SetTrigger("boss");
-                yield return new WaitForSeconds(beatLength * 4);
-                if (bossIndexPool.Count == 0)
-                {
-                    RefillPool(bossIndexPool, bosses.pool.Length);
-                }
-                do
-                {
-                    index = Random.Range(0, bossIndexPool.Count);
-                } while (bossIndexPool[index] == lastBossIndex && bosses.pool.Length > 1);
-                LoadMicrogame(GameSettings.hardMode == 1 ? bosses.pool[bossIndexPool[index]].hardMicrogame : bosses.pool[bossIndexPool[index]].microgame);
-                skin.controlType.SetIcons(bosses.pool[bossIndexPool[index]].type);
-                if (bosses.pool.Length > 1) lastBossIndex = bossIndexPool[index];
-                bossIndexPool.RemoveAt(index);
+            // 指定某款小遊戲
+            if (isAppoint){
+                LoadMicrogame(testGame.gameObject);
+                skin.controlType.SetIcons(testType);
             }
-            else
-            {
-                if (points > 0 && points % speedUpInterval == 0)
+            else{
+                // Handle speed up, microgame/boss loading
+                if (points > 0 && points % bossInterval == 0)
                 {
                     yield return new WaitForSeconds(beatLength * 4);
-                    speedUpMult += GameSettings.hardMode == 1 ? speedUpAddHard : speedUpAdd;
-                    skin.speedUp.Invoke();
-                    SetGameSpeed(speedUpMult);
-                    skin.animator.SetTrigger("speedUp");
-                    yield return new WaitForSeconds(beatLength * 8);
-                    skin.microPrep.Invoke();
+                    SetGameSpeed((GameSettings.hardMode == 1 ? hardModeBossSpeed : 1f) + ((GameSettings.hardMode == 1 ? bossSpeedUpAddHard : bossSpeedUpAdd) * bossesCleared));
+                    skin.boss.Invoke();
+                    skin.animator.SetTrigger("boss");
                     yield return new WaitForSeconds(beatLength * 4);
+                    if (bossIndexPool.Count == 0)
+                    {
+                        RefillPool(bossIndexPool, bosses.pool.Length);
+                    }
+                    do
+                    {
+                        index = Random.Range(0, bossIndexPool.Count);
+                    } while (bossIndexPool[index] == lastBossIndex && bosses.pool.Length > 1);
+                    LoadMicrogame(GameSettings.hardMode == 1 ? bosses.pool[bossIndexPool[index]].hardMicrogame : bosses.pool[bossIndexPool[index]].microgame);
+                    skin.controlType.SetIcons(bosses.pool[bossIndexPool[index]].type);
+                    if (bosses.pool.Length > 1) lastBossIndex = bossIndexPool[index];
+                    bossIndexPool.RemoveAt(index);
                 }
-                if (gameIndexPool.Count == 0)
+                else
                 {
-                    RefillPool(gameIndexPool, microgames.pool.Length);
+                    if (points > 0 && points % speedUpInterval == 0)
+                    {
+                        yield return new WaitForSeconds(beatLength * 4);
+                        speedUpMult += GameSettings.hardMode == 1 ? speedUpAddHard : speedUpAdd;
+                        skin.speedUp.Invoke();
+                        SetGameSpeed(speedUpMult);
+                        skin.animator.SetTrigger("speedUp");
+                        yield return new WaitForSeconds(beatLength * 8);
+                        skin.microPrep.Invoke();
+                        yield return new WaitForSeconds(beatLength * 4);
+                    }
+                    if (gameIndexPool.Count == 0)
+                    {
+                        RefillPool(gameIndexPool, microgames.pool.Length);
+                    }
+                    do
+                    {
+                        index = Random.Range(0, gameIndexPool.Count);
+                    } while (gameIndexPool[index] == lastGameIndex && microgames.pool.Length > 1);
+                    LoadMicrogame(GameSettings.hardMode == 1 ? microgames.pool[gameIndexPool[index]].hardMicrogame : microgames.pool[gameIndexPool[index]].microgame);
+                    skin.controlType.SetIcons(microgames.pool[gameIndexPool[index]].type);
+                    if (microgames.pool.Length > 1) lastGameIndex = gameIndexPool[index];
+                    gameIndexPool.RemoveAt(index);
                 }
-                do
-                {
-                    index = Random.Range(0, gameIndexPool.Count);
-                } while (gameIndexPool[index] == lastGameIndex && microgames.pool.Length > 1);
-                LoadMicrogame(GameSettings.hardMode == 1 ? microgames.pool[gameIndexPool[index]].hardMicrogame : microgames.pool[gameIndexPool[index]].microgame);
-                skin.controlType.SetIcons(microgames.pool[gameIndexPool[index]].type);
-                if (microgames.pool.Length > 1) lastGameIndex = gameIndexPool[index];
-                gameIndexPool.RemoveAt(index);
             }
+
+            
             points++;
             skin.points.text = points.ToString();
             skin.animator.SetTrigger("microPrep");
