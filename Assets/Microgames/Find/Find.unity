@@ -451,7 +451,6 @@ GameObject:
   - component: {fileID: 2622399525875448079}
   - component: {fileID: 2622399525875448076}
   - component: {fileID: 2622399525875448077}
-  - component: {fileID: 7445170906072382006}
   - component: {fileID: 2622399525875448068}
   m_Layer: 0
   m_Name: Micro_Find
@@ -843,59 +842,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 720}
   m_Pivot: {x: 1, y: 0.5}
---- !u!114 &7445170906072382006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2622399525875448067}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb4007dcb4e639f4eb7b4dbeefb81b1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  avatarArea: {fileID: 7816591630417016852}
-  avatarSelection:
-  - {fileID: 154172673162939090, guid: 749b7be41f085a34488fb5bbbd74db6e, type: 3}
-  - {fileID: 154172673162939090, guid: c3ae98f0c61d3e04ba1fdd732fff3b04, type: 3}
-  isBoss: 0
-  baseBeats: 12
-  timer: 0
-  actionVerb: FindMarine
-  objectsToEnable: []
-  useStandardTimer: 1
-  onStart:
-    m_PersistentCalls:
-      m_Calls: []
-  bgm: {fileID: 0}
-  cleared: 0
-  timeOver: 0
-  avatars: []
-  sfx: {fileID: 1404884884131525704}
-  numberOfHeads: 20
-  scaleMult: 1
-  spawnXBound: 6
-  spawnYLowerBound: -3.5
-  spawnYUpperBound: 4
-  sprites:
-  - {fileID: 21300000, guid: 0ede8738eb2a90947a062d625b786d98, type: 3}
-  - {fileID: 21300000, guid: 0acca3c3353df0d44bd68ef48132cc65, type: 3}
-  - {fileID: 21300000, guid: aca02145029e9bf4da0921ef0289fc59, type: 3}
-  - {fileID: 21300000, guid: a2b025f4f034b7f42a94c497b014f019, type: 3}
-  - {fileID: 21300000, guid: 02e001c7a6742c54b80008f57b339354, type: 3}
-  - {fileID: 21300000, guid: c578ee1021667a74fb59ef2ce6700f83, type: 3}
-  - {fileID: 21300000, guid: a6bc4ffb37c792d44af55d430752f14c, type: 3}
-  - {fileID: 21300000, guid: f78cca0ec1582d048910c9007caee71c, type: 3}
-  - {fileID: 21300000, guid: 6d67b1aa395a58a4a93be1ae98bca960, type: 3}
-  - {fileID: 21300000, guid: 4b576dc6b5f749b4e9818b564c04454a, type: 3}
-  - {fileID: 21300000, guid: e1098ecac3489d04ca95db1a7f595562, type: 3}
-  - {fileID: 21300000, guid: 6a93fb0950ac36147a4a5bb8d56f4277, type: 3}
-  - {fileID: 21300000, guid: be1157f9092f29344a6827eb2d864fa5, type: 3}
-  - {fileID: 21300000, guid: 72c37699407484845b61381608bbced5, type: 3}
-  - {fileID: 21300000, guid: d98fd3c7239e6064ba28a35f11966a34, type: 3}
-  - {fileID: 21300000, guid: fc3fb1c4b70b5474aa6245207b689a7e, type: 3}
-  head: {fileID: 4639468729316947276, guid: eac2cd93e46349545b3ef69e56bae3a7, type: 3}
 --- !u!224 &7816591630417016852
 RectTransform:
   m_ObjectHideFlags: 0

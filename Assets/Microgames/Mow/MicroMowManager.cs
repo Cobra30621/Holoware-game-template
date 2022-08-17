@@ -47,6 +47,7 @@ public class MicroMowManager : MonoBehaviour
         timer -= Time.deltaTime;
         if(timer < 0){
             timeOver = true;
+            End();
         }
     }
 
@@ -72,6 +73,7 @@ public class MicroMowManager : MonoBehaviour
             {
                 cleared = true;
                 sfx.PlaySFX(0);
+                End();
             }
             moveVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             playerAnimator.SetFloat("speed", moveVector.magnitude);

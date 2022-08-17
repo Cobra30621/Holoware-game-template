@@ -50,6 +50,7 @@ public class MicroWhackManager : MonoBehaviour
         timer -= Time.deltaTime;
         if(timer < 0){
             timeOver = true;
+            End();
         }
     }
 
