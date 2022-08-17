@@ -88,7 +88,7 @@
                     spawnPosition = patchPosition + Random.insideUnitCircle * spawnRadius;
                     spawnPosition = new Vector2(Mathf.Clamp(spawnPosition.x, -xBound, xBound), Mathf.Clamp(spawnPosition.y, -yBound, yBound));
                     spawnedGrass = Instantiate(grass, spawnPosition, Quaternion.identity, transform).GetComponent<MicroMowGrass>();
-                    spawnedGrass.microgame = this;
+                    // spawnedGrass.microgame = this;
                     grassAmount++;
                 }
             }
