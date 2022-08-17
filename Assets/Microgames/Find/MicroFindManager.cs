@@ -1,11 +1,15 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class MicroFind : Microgame
+public class MicroFindManager : MonoBehaviour
 {
+    // Every MicroGame Method
+    [HideInInspector] public BGMManager bgm;
+    public float start_time = 10;
+    public float timer; 
+    public bool cleared; // a microgame is considered cleared if cleared = true
+    public bool timeOver; // once set to true, the microgame will exit
     public SFXManager sfx;
     public int numberOfHeads = 25;
     public float scaleMult = 1f, spawnXBound = 6f, spawnYLowerBound = -3.5f, spawnYUpperBound = 4f;
@@ -13,15 +17,33 @@ public class MicroFind : Microgame
     public GameObject head;
     List<GameObject> heads;
     GameObject targetHead, clickedHead;
-
-    public void Start()
+    
+    // Start is called before the first frame update
+    void Start()
     {
+        bgm = GetComponent<BGMManager>();
+        timer = start_time;
         heads = new List<GameObject>();
-        onStart.AddListener(Game);
+        Game();
     }
 
-    public void Game()
+    // Update is called once per frame
+    void Update()
     {
+        Countdown();
+    }
+
+    void Countdown(){
+        if(timeOver){return;}
+
+        timer -= Time.deltaTime;
+        if(timer < 0){
+            timeOver = true;
+        }
+    }
+
+    [ContextMenu("Game Start")]
+    public void Game(){
         MicroFindHead newHead;
         for (int i = 0; i < numberOfHeads; i++)
         {
@@ -43,8 +65,6 @@ public class MicroFind : Microgame
             newHead.transform.localScale = Vector3.one * scaleMult;
             heads.Add(newHead.gameObject);
         }
-        AddAvatar(0);
-        AddAvatar(1);
         bgm.PlayBGM(0);
         StartCoroutine(GameCoroutine());
     }
@@ -67,14 +87,17 @@ public class MicroFind : Microgame
                             if (!clickedHead)
                             {
                                 clickedHead = i.collider.gameObject;
-                            } else
+                            }
+                            else
                             {
-                                if (((Vector2)i.collider.transform.position - Utils.GetMousePosition()).magnitude < ((Vector2)clickedHead.transform.position - Utils.GetMousePosition()).magnitude)
+                                if (((Vector2)i.collider.transform.position - Utils.GetMousePosition()).magnitude <
+                                    ((Vector2)clickedHead.transform.position - Utils.GetMousePosition()).magnitude)
                                 {
                                     clickedHead = i.collider.gameObject;
                                 }
                             }
                         }
+
                         if (i.collider.tag == "Goal")
                         {
                             cleared = true;
@@ -83,19 +106,19 @@ public class MicroFind : Microgame
                         }
                     }
                 }
+
                 if (clickedHead)
                 {
                     if (cleared)
                     {
-                        avatars[0].SetExpression(1);
-                        avatars[1].SetExpression(1);
                         sfx.PlaySFX(0);
-                    } else
+                    }
+                    else
                     {
-                        avatars[0].SetExpression(2);
-                        avatars[1].SetExpression(2);
                         sfx.PlaySFX(1);
                     }
+                    End();
+
                     for (int i = 0; i < heads.Count; i++)
                     {
                         if (heads[i] != targetHead && heads[i] != clickedHead)
@@ -103,10 +126,21 @@ public class MicroFind : Microgame
                             heads[i].SetActive(false);
                         }
                     }
-                    iTween.ScaleFrom(clickedHead, iTween.Hash("scale", clickedHead.transform.localScale * 1.2f, "time", 0.25f, "easetype", iTween.EaseType.easeOutBack));
+
+                    // iTween.ScaleFrom(clickedHead,
+                    //     iTween.Hash("scale", clickedHead.transform.localScale * 1.2f, "time", 0.25f, "easetype",
+                    //         iTween.EaseType.easeOutBack));
                     yield break;
                 }
             }
         }
+    }
+
+    [ContextMenu("Game End")]
+    public void End(){
+        if(cleared)
+            Debug.Log("Game End : Win");
+        else
+            Debug.Log("Game End : Lose");
     }
 }
