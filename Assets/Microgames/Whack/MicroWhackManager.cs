@@ -1,11 +1,17 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MicroWhack : Microgame
+public class MicroWhackManager : MonoBehaviour
 {
+    // Every MicroGame Method
+    [HideInInspector] public BGMManager bgm;
+    public float start_time = 10;
+    public float timer; 
+    public bool cleared; // a microgame is considered cleared if cleared = true
+    public bool timeOver; // once set to true, the microgame will exit
+
     public SFXManager sfx;
     public GameObject hammer, crosshair, targetObject;
     public GameObject[] hazardObjects;
@@ -20,23 +26,48 @@ public class MicroWhack : Microgame
     int targetsHit;
     bool canMove;
     List<int> availableHoles;
-
-    public void Start()
+    
+    // Start is called before the first frame update
+    void Start()
     {
+        bgm = GetComponent<BGMManager>();
+        timer = start_time;
         activeObjects = new MicroWhackObject[holes.Length];
         availableHoles = new List<int>();
         canMove = true;
-        onStart.AddListener(Game);
+        Game();
     }
 
-    public void Game()
+    // Update is called once per frame
+    void Update()
     {
-        AddAvatar(0);
+        Countdown();
+    }
+
+    void Countdown(){
+        if(timeOver){return;}
+
+        timer -= Time.deltaTime;
+        if(timer < 0){
+            timeOver = true;
+        }
+    }
+
+    [ContextMenu("Game Start")]
+    public void Game(){
         bgm.PlayBGM(0);
         StartCoroutine(GameCoroutine());
         StartCoroutine(SpawnCoroutine());
     }
 
+    [ContextMenu("Game End")]
+    public void End(){
+        if(cleared)
+            Debug.Log("Game End : Win");
+        else
+            Debug.Log("Game End : Lose");
+    }
+    
     IEnumerator GameCoroutine()
     {
         while (timer > 0) {
@@ -44,7 +75,6 @@ public class MicroWhack : Microgame
             {
                 cleared = false;
                 sfx.PlaySFX(1);
-                avatars[0].SetExpression(2);
                 crosshair.SetActive(false);
                 hitCount.color = Color.red;
                 break;
@@ -118,7 +148,6 @@ public class MicroWhack : Microgame
         if (!cleared && targetsHit >= targetGoal && canMove)
         {
             cleared = true;
-            avatars[0].SetExpression(1);
             sfx.PlaySFX(0);
             hitCount.color = Color.green;
         } else if (hitObject && canMove)

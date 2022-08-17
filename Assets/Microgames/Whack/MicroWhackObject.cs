@@ -1,30 +1,28 @@
-﻿namespace Micro.Whack
+﻿
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MicroWhackObject : MonoBehaviour
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
+    public SpriteRenderer spriteRenderer;
+    public Sprite hitSprite;
+    Animator animator;
+    [HideInInspector] public MicroWhackManager microgame;
 
-    public class MicroWhackObject : MonoBehaviour
+    void Awake()
     {
-        public SpriteRenderer spriteRenderer;
-        public Sprite hitSprite;
-        Animator animator;
-        [HideInInspector] public MicroWhack microgame;
+        animator = GetComponent<Animator>();
+    }
 
-        void Awake()
-        {
-            animator = GetComponent<Animator>();
-        }
+    public void Hit()
+    {
+        animator.SetTrigger("hit");
+        spriteRenderer.sprite = hitSprite;
+    }
 
-        public void Hit()
-        {
-            animator.SetTrigger("hit");
-            spriteRenderer.sprite = hitSprite;
-        }
-
-        public void DestroySelf()
-        {
-            Destroy(gameObject);
-        }
+    public void DestroySelf()
+    {
+        Destroy(gameObject);
     }
 }
