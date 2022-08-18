@@ -1,13 +1,19 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Lean.Localization;
 
-public class BossDance : Microgame
+public class BossDanceManager : MonoBehaviour
 {
+    // Every MicroGame Method
+    [HideInInspector] public BGMManager bgm;
+    public float start_time = 10;
+    public float timer; 
+    public bool cleared; // a microgame is considered cleared if cleared = true
+    public bool timeOver; // once set to true, the microgame will exit
+
     public SFXManager sfx;
     public TextMeshProUGUI trackName, comboDisp;
     public Image healthBar;
@@ -25,9 +31,33 @@ public class BossDance : Microgame
     double startTime, endTime;
     int nextNoteSpawn, matsuriNextNote, combo;
     bool fullCombo;
-
-    public void Start()
+    
+    // Start is called before the first frame update
+    void Start()
     {
+        bgm = GetComponent<BGMManager>();
+        timer = start_time;
+        
+        Game();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Countdown();
+    }
+
+    void Countdown(){
+        if(timeOver){return;}
+
+        timer -= Time.deltaTime;
+        if(timer < 0){
+            timeOver = true;
+        }
+    }
+
+    [ContextMenu("Game Start")]
+    public void Game(){
         arrowAnimators = new Animator[columns.Length];
         for (int i = 0; i < columns.Length; i++)
         {
@@ -45,16 +75,9 @@ public class BossDance : Microgame
         travelTime /= Time.timeScale;
         marineAnimator.speed = track.bpm / 60f;
         matsuriAnimator.speed = track.bpm / 60f;
-        onStart.AddListener(Game);
-    }
-
-    public void Game()
-    {
-        AddAvatar(0);
-        AddAvatar(1);
         StartCoroutine(GameCoroutine());
     }
-
+    
     IEnumerator GameCoroutine()
     {
         // schedule audio
@@ -135,10 +158,14 @@ public class BossDance : Microgame
             }
 
             // inputs
-            if (Input.GetButtonDown("Left")) CheckInput(0);
-            if (Input.GetButtonDown("Up")) CheckInput(1);
-            if (Input.GetButtonDown("Down")) CheckInput(2);
-            if (Input.GetButtonDown("Right")) CheckInput(3);
+            // if (Input.GetButtonDown("Left")) CheckInput(0);
+            // if (Input.GetButtonDown("Up")) CheckInput(1);
+            // if (Input.GetButtonDown("Down")) CheckInput(2);
+            // if (Input.GetButtonDown("Right")) CheckInput(3);
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) CheckInput(2);
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) CheckInput(1);
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) CheckInput(0);
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) CheckInput(3);
 
             // late note miss
             if (activeNotes.Count > 0)
@@ -173,8 +200,6 @@ public class BossDance : Microgame
         {
             marineAnimator.SetTrigger("fail");
             matsuriAnimator.SetTrigger("fail");
-            avatars[0].SetExpression(2);
-            avatars[1].SetExpression(2);
             failFXTimer = 3f;
             while (failFXTimer > 0)
             {
@@ -187,8 +212,6 @@ public class BossDance : Microgame
             cleared = true;
             marineAnimator.SetTrigger("win");
             matsuriAnimator.SetTrigger("win");
-            avatars[0].SetExpression(1);
-            avatars[1].SetExpression(1);
             sfx.PlaySFX(0);
             sfx.PlaySFX(5);
             if (fullCombo) fullComboFX.SetActive(true);
@@ -275,5 +298,13 @@ public class BossDance : Microgame
             }
             activeNotes.RemoveAt(0);
         }
+    }
+
+    [ContextMenu("Game End")]
+    public void End(){
+        if(cleared)
+            Debug.Log("Game End : Win");
+        else
+            Debug.Log("Game End : Lose");
     }
 }
