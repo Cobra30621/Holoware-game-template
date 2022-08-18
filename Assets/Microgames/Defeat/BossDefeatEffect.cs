@@ -1,18 +1,16 @@
-﻿namespace Micro.Defeat
+﻿
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+
+public class BossDefeatEffect : MonoBehaviour
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
-    using TMPro;
+    public TextMeshPro text;
+    public float lifeTime = 1f;
 
-    public class BossDefeatEffect : MonoBehaviour
+    void Start()
     {
-        public TextMeshPro text;
-        public float lifeTime = 1f;
-
-        void Start()
-        {
-            Destroy(gameObject, lifeTime);
-        }
+        Destroy(gameObject, lifeTime);
     }
 }

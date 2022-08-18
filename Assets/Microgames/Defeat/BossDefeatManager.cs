@@ -1,5 +1,4 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,8 +6,18 @@ using TMPro;
 using Lean.Localization;
 using UnityEngine.Events;
 
-public class BossDefeat : Microgame
+public class BossDefeatManager : MonoBehaviour
 {
+    // Every MicroGame Method
+    [HideInInspector] public BGMManager bgm;
+    public float start_time = 10;
+    public float timer; 
+    public bool cleared; // a microgame is considered cleared if cleared = true
+    public bool timeOver; // once set to true, the microgame will exit
+
+    public RectTransform avatarArea;
+    public List<GameObject> avatarSelection; // avatar prefabs can be found in Prefabs/Avatars
+    [HideInInspector] public List<CharacterAvatar> avatars;
     public SFXManager sfx;
     public TextMeshProUGUI descriptionDisp, actionDisp;
     public GameObject actionDispFrame;
@@ -21,42 +30,58 @@ public class BossDefeat : Microgame
     [HideInInspector] public BossDefeatMenu currentMenu;
     public BossDefeatMenu CurrentMenu { set { currentMenu = value; } }
     [HideInInspector] public bool canAct, allUnitsDown, actionInProgress;
-
+    
     new void Awake()
     {
-        base.Awake();
         for (int i = 0; i < units.Length; i++)
         {
             units[i].unitIndex = i;
         }
     }
-
-    public void Start()
+    
+    // Start is called before the first frame update
+    void Start()
     {
-        boss.gameObject.SetActive(false);
-        onStart.AddListener(Game);
+        bgm = GetComponent<BGMManager>();
+        timer = start_time;
+        Game();
     }
 
-    public void Game()
+    // Update is called once per frame
+    void Update()
     {
-        if (GameSettings.hardMode == 1)
-        {
-            AddAvatar(0);
-            AddAvatar(1);
-            AddAvatar(2);
-            AddAvatar(3);
-            AddAvatar(4);
-        } else
-        {
-            AddAvatar(0);
-            AddAvatar(2);
-            AddAvatar(4);
+        Countdown();
+    }
+
+    void Countdown(){
+        if(timeOver){return;}
+
+        timer -= Time.deltaTime;
+        if(timer < 0){
+            timeOver = true;
         }
+    }
+
+    [ContextMenu("Game Start")]
+    public void Game(){
+        AddAvatar(0);
+        AddAvatar(2);
+        AddAvatar(4);
+        
+        boss.gameObject.SetActive(false);
         
         bgm.PlayBGM(0);
         StartCoroutine(GameCoroutine());
     }
-
+    // add avatar from avatarSelection at specified index to avatars list
+    public void AddAvatar(int index)
+    {
+        avatars.Add(Instantiate(avatarSelection[index], avatarArea).GetComponent<CharacterAvatar>());
+        avatars[avatars.Count - 1].transform.localScale = Vector3.one;
+        avatars[avatars.Count - 1].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (avatars.Count - 1) * -160f);
+    }
+    
+    
     IEnumerator GameCoroutine()
     {
         currentMenu = mainMenu;
@@ -119,6 +144,8 @@ public class BossDefeat : Microgame
         {
             SetDescriptionLocalized("Defeat/Lose");
         }
+
+        End();
         yield return new WaitForSeconds(3f);
         timeOver = true;
     }
@@ -187,5 +214,13 @@ public class BossDefeat : Microgame
             }
         }
         return false;
+    }
+
+    [ContextMenu("Game End")]
+    public void End(){
+        if(cleared)
+            Debug.Log("Game End : Win");
+        else
+            Debug.Log("Game End : Lose");
     }
 }
