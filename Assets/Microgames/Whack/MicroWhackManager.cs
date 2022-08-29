@@ -3,15 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MicroWhackManager : MonoBehaviour
+public class MicroWhackManager : MicroGameManager
 {
-    // Every MicroGame Method
-    [HideInInspector] public BGMManager bgm;
-    public float start_time = 10;
-    public float timer; 
-    public bool cleared; // a microgame is considered cleared if cleared = true
-    public bool timeOver; // once set to true, the microgame will exit
-
     public SFXManager sfx;
     public GameObject hammer, crosshair, targetObject;
     public GameObject[] hazardObjects;
@@ -27,48 +20,21 @@ public class MicroWhackManager : MonoBehaviour
     bool canMove;
     List<int> availableHoles;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        bgm = GetComponent<BGMManager>();
-        timer = start_time;
+
+
+    [ContextMenu("Game Start")]
+    public override void Game(){
+        base.Game();
+        
+        bgm.PlayBGM(0);
         activeObjects = new MicroWhackObject[holes.Length];
         availableHoles = new List<int>();
         canMove = true;
-        Game();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Countdown();
-    }
-
-    void Countdown(){
-        if(timeOver){return;}
-
-        timer -= Time.deltaTime;
-        if(timer < 0){
-            timeOver = true;
-            End();
-        }
-    }
-
-    [ContextMenu("Game Start")]
-    public void Game(){
-        bgm.PlayBGM(0);
         StartCoroutine(GameCoroutine());
         StartCoroutine(SpawnCoroutine());
     }
 
-    [ContextMenu("Game End")]
-    public void End(){
-        if(cleared)
-            Debug.Log("Game End : Win");
-        else
-            Debug.Log("Game End : Lose");
-    }
-    
+
     IEnumerator GameCoroutine()
     {
         while (timer > 0) {

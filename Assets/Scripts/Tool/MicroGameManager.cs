@@ -6,26 +6,27 @@ public class MicroGameManager : MonoBehaviour
 {
     // Every MicroGame Method
     [HideInInspector] public BGMManager bgm;
-    public float start_time = 10;
-    public float timer; 
+    public float initTime = 10; 
+    public float timer;
+    public float beatLength = 0.5f;
     public bool cleared; // a microgame is considered cleared if cleared = true
     public bool timeOver; // once set to true, the microgame will exit
-
+    public TimerUI timerUI ;
+    
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         bgm = GetComponent<BGMManager>();
-        timer = start_time;
         Game();
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         Countdown();
     }
 
-    void Countdown(){
+    protected virtual void Countdown(){
         if(timeOver){return;}
 
         timer -= Time.deltaTime;
@@ -35,14 +36,20 @@ public class MicroGameManager : MonoBehaviour
     }
 
     [ContextMenu("Game Start")]
-    public void Game(){
+    public virtual void Game(){
+        timer = initTime;
+        if (timerUI)
+        {
+            timerUI.gameObject.SetActive(true);
+        }
     }
 
     [ContextMenu("Game End")]
-    public void End(){
+    public virtual void End(){
         if(cleared)
             Debug.Log("Game End : Win");
         else
             Debug.Log("Game End : Lose");
+        
     }
 }

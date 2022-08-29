@@ -337,7 +337,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30B2\u30FC\u30E0\u30AA\u30FC\u30D0\u30FC..."
+  m_text: Game Over...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0f69195dd9c7edf4f868c18b9206534c, type: 2}
   m_sharedMaterial: {fileID: 8694092834011044094, guid: 0f69195dd9c7edf4f868c18b9206534c,
@@ -407,14 +407,14 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 170234729}
-    characterCount: 10
+    characterCount: 12
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
-    materialCount: 2
+    materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -959,7 +959,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30E1\u30A4\u30F3\u30E1\u30CB\u30E5\u30FC\u306B\u623B\u308B"
+  m_text: Back To Main Menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0f69195dd9c7edf4f868c18b9206534c, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 37594d700f0590648ae7f3e4e1f0b4c6, type: 2}
@@ -1028,14 +1028,14 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 414693358}
-    characterCount: 10
+    characterCount: 17
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 3
+    wordCount: 4
     linkCount: 0
     lineCount: 1
     pageCount: 1
-    materialCount: 2
+    materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -1913,8 +1913,13 @@ PrefabInstance:
         type: 3}
       propertyPath: testGame
       value: 
-      objectReference: {fileID: 4877162049266537385, guid: 31bf91df3eb1ef7459ba9b5440ef3374,
+      objectReference: {fileID: 4774887890668343586, guid: 1b1c520d18b17fb47a69fdf2ef90416a,
         type: 3}
+    - target: {fileID: 2425312780539697252, guid: 4c5e26ed49f7ad94e9d3196845073932,
+        type: 3}
+      propertyPath: isAppoint
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2815349174404094260, guid: 4c5e26ed49f7ad94e9d3196845073932,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2057,7 +2062,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30B9\u30B3\u30A2"
+  m_text: Score
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0f69195dd9c7edf4f868c18b9206534c, type: 2}
   m_sharedMaterial: {fileID: 8694092834011044094, guid: 0f69195dd9c7edf4f868c18b9206534c,
@@ -2127,7 +2132,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1690733953}
-    characterCount: 3
+    characterCount: 5
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -2483,7 +2488,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30CF\u30A4\u30B9\u30B3\u30A2"
+  m_text: High Score
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0f69195dd9c7edf4f868c18b9206534c, type: 2}
   m_sharedMaterial: {fileID: 8694092834011044094, guid: 0f69195dd9c7edf4f868c18b9206534c,
@@ -2553,10 +2558,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1981131751}
-    characterCount: 5
+    characterCount: 10
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1

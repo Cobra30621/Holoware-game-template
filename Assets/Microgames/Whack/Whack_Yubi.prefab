@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 4990414219134903368}
-  hitSprite: {fileID: 21300000, guid: 31339858a91e65446b57f451a4be18c0, type: 3}
+  hitSprite: {fileID: 21300000, guid: dbb50e85541dea64c89c612d4f26d5a6, type: 3}
   microgame: {fileID: 0}
 --- !u!61 &371239612579851313
 BoxCollider2D:

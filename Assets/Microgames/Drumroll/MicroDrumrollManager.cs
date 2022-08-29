@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MicroDrumrollManager : MonoBehaviour
+public class MicroDrumrollManager : MicroGameManager
 {
-    // Every MicroGame Method
-    [HideInInspector] public BGMManager bgm;
-    public float start_time = 10;
-    public float timer; 
-    public bool cleared; // a microgame is considered cleared if cleared = true
-    public bool timeOver; // once set to true, the microgame will exit
+ 
     
     public SFXManager sfx;
     public RectTransform gauge1, gauge2, gaugeTarget, gaugeMarker;
@@ -24,31 +19,10 @@ public class MicroDrumrollManager : MonoBehaviour
     float progress, lastProgress;
     bool right, reachedTarget;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        bgm = GetComponent<BGMManager>();
-        timer = start_time;
-        Game();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Countdown();
-    }
-
-    void Countdown(){
-        if(timeOver){return;}
-
-        timer -= Time.deltaTime;
-        if(timer < 0){
-            timeOver = true;
-        }
-    }
-
+    
     [ContextMenu("Game Start")]
-    public void Game(){
+    public  override  void Game(){
+        base.Game();
         gauge1.anchoredPosition = new Vector2(0, gauge1.anchoredPosition.y);
         gauge1.sizeDelta = new Vector2(gaugeLength * target, gauge1.sizeDelta.y);
         gauge2.anchoredPosition = new Vector2(gaugeLength * target, gauge2.anchoredPosition.y);
@@ -56,7 +30,9 @@ public class MicroDrumrollManager : MonoBehaviour
         gaugeTarget.anchoredPosition = new Vector2(gaugeLength * target, gaugeTarget.anchoredPosition.y);
         right = Random.value < 0.5f ? true : false;
         bgm.PlayBGM(0);
+       
         StartCoroutine(GameCoroutine());
+        
     }
     
     IEnumerator GameCoroutine()
@@ -128,12 +104,5 @@ public class MicroDrumrollManager : MonoBehaviour
 
         End();
     }
-
-    [ContextMenu("Game End")]
-    public void End(){
-        if(cleared)
-            Debug.Log("Game End : Win");
-        else
-            Debug.Log("Game End : Lose");
-    }
+    
 }
