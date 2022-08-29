@@ -16,7 +16,6 @@ public class MicroWhackManager : MicroGameManager
     public Text hitCount;
     public Transform[] holes;
     [HideInInspector] public MicroWhackObject[] activeObjects;
-    int targetsHit;
     bool canMove;
     List<int> availableHoles;
     
@@ -50,10 +49,12 @@ public class MicroWhackManager : MicroGameManager
             {
                 Hit(hammer.transform.position);
             }
-            hitCount.text = targetsHit.ToString() + "/" + targetGoal.ToString();
+            hitCount.text = score.ToString() + "/" + targetGoal.ToString();
             hammer.transform.position = Utils.GetMousePosition();
             yield return null;
         }
+        yield return new WaitForSeconds(2);
+        End();
     }
 
     IEnumerator SpawnCoroutine()
@@ -63,6 +64,7 @@ public class MicroWhackManager : MicroGameManager
             yield return new WaitForSeconds(cycleInterval);
             SpawnObjects();
             numberOfCycles--;
+            
         }
     }
 
@@ -98,7 +100,7 @@ public class MicroWhackManager : MicroGameManager
         {
             if (i.tag == "Pickup")
             {
-                targetsHit++;
+                score++;
                 hitObject = true;
                 i.GetComponent<MicroWhackObject>().Hit();
             }
@@ -112,7 +114,7 @@ public class MicroWhackManager : MicroGameManager
         sfx.PlaySFX(3);
         if (hitObject) sfx.PlaySFX(4);
         hitParticle.Play();
-        if (!cleared && targetsHit >= targetGoal && canMove)
+        if (!cleared && score >= targetGoal && canMove)
         {
             cleared = true;
             sfx.PlaySFX(0);
