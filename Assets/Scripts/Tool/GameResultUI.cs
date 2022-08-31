@@ -12,14 +12,13 @@ public class GameResultUI : MonoBehaviour
     public void Show(string outcome, int score)
     {
         gameObject.SetActive(true);
-        scoreText.text =   $"Score : {score}";
+        scoreText.text =   $"{score}";
         scoreText.gameObject.SetActive(showScore);
         outcomeText.text = outcome;
     }
     public void Retry()
     {
         Scene scene = SceneManager.GetActiveScene();
-        Debug.Log("Name: " + scene.name);
         SceneManager.LoadScene(scene.name);
     }
 }
