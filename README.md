@@ -50,11 +50,11 @@ I had already finished 14(23) microgame Unity package.
 ### MicroGame V2
 
 - Add time UI, Result Unity
-I had already finished 3(23) microgame V2 Unity package.
+I had already finished 2(23) microgame V2 Unity package.
 
 - Drumroll 
 - Whack 
-- ASMR 
+
 
 ## License
 
