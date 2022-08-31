@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -9,6 +10,7 @@ public class GameResultUI : MonoBehaviour
     public TextMeshProUGUI scoreText, outcomeText;
     public bool showScore;
     
+
     public void Show(string outcome, int score)
     {
         gameObject.SetActive(true);

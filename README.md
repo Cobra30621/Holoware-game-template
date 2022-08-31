@@ -27,11 +27,8 @@ To make the microgame in Holoware easlier to port to other game project, I want 
 
 
 ## MicroGame
-<<<<<<< HEAD
-I had already finished 13(23) microgame Unity package.
-=======
 I had already finished 14(23) microgame Unity package.
->>>>>>> b71ebfd548
+
 [Assets/MicroGamePackage](Assets/MicroGamePackage)
 
 - ASMR : Find the right position and click.
@@ -49,6 +46,15 @@ I had already finished 14(23) microgame Unity package.
 - Solve : Math game
     - remind : need to download TMP importer
 - Whack : whack-a-mole
+
+### MicroGame V2
+
+- Add time UI, Result Unity
+I had already finished 2(23) microgame V2 Unity package.
+
+- Drumroll 
+- Whack 
+
 
 ## License
 
