@@ -53,7 +53,7 @@ public class MicroWhackManager : MicroGameManager
             hammer.transform.position = Utils.GetMousePosition();
             yield return null;
         }
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         End();
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MicroASMRManager : MonoBehaviour
+public class MicroASMRManager : MicroGameManager
 {
     public SFXManager sfx, duckSfx;
     public AudioSource duckAudioSource;
@@ -17,37 +17,11 @@ public class MicroASMRManager : MonoBehaviour
     public Image bar, barOutline;
     float targetAngle, progress, duckAngle;
 
-    // Every MicroGame Method
-    [HideInInspector] public BGMManager bgm;
-    public float start_time = 10;
-    public float timer; 
-    public bool cleared; // a microgame is considered cleared if cleared = true
-    public bool timeOver; // once set to true, the microgame will exit; must be set manually if useStandardTimer = false
+    
 
-    public void Start()
+    public override void Game()
     {
-        bgm = GetComponent<BGMManager>();
-        timer = start_time;
-        Game();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Countdown();
-    }
-
-    void Countdown(){
-        if(timeOver){return;}
-
-        timer -= Time.deltaTime;
-        if(timer < 0){
-            timeOver = true;
-        }
-    }
-
-    public void Game()
-    {
+        base.Game();
         bgm.PlayBGM(0);
         targetAngle = Random.Range(-90f, 90f);
         StartCoroutine(GameCoroutine());
@@ -81,6 +55,8 @@ public class MicroASMRManager : MonoBehaviour
             barOutline.color = Color.Lerp(barOutline.color, Color.black, 0.05f);
             yield return null;
         }
+        yield return new WaitForSeconds(1);
+        End();
     }
 
     void Quack(float angle)
@@ -100,12 +76,9 @@ public class MicroASMRManager : MonoBehaviour
             sfx.PlaySFX(0);
             bar.color = Color.green;
             human.sprite = humanWin;
-            End();
+            
         }
     }
 
-    [ContextMenu("Game End")]
-    public void End(){
-        Debug.Log("Game End");
-    }
+  
 }

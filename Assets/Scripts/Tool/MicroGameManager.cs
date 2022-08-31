@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,11 +15,20 @@ public class MicroGameManager : MonoBehaviour
     public bool timeOver; // once set to true, the microgame will exit
     public TimerUI timerUI ;
     public GameResultUI gameResultUI;
-    
+
+    private void Awake()
+    {
+        if (timerUI)
+        {
+            timerUI.microGameManager = this;
+        }
+    }
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
         bgm = GetComponent<BGMManager>();
+        
         Game();
     }
 

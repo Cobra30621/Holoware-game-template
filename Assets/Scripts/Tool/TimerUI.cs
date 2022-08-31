@@ -47,7 +47,7 @@ public class TimerUI : MonoBehaviour
         icon.sprite = icon2;
         marker.color = Color.clear;
         yield return new WaitForSeconds(microGameManager.beatLength);
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false);
         
     }
 }
