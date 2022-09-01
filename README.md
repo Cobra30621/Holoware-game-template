@@ -16,12 +16,13 @@ To make the microgame in Holoware easlier to port to other game project, I want 
 ## How to Use
 
 1. Download Unity (This project was developed in **Unity 2019.4.11f1** using C#.)
-2. Find the Micro game is in  [Assets/MicroGamePackage](Assets/MicroGamePackage) and download it.
+2. Play [Holoware](https://tiannya.itch.io/holoware) to familiar the MicroGame.
+3. Find the Micro game is in  [Assets/MicroGamePackage](Assets/MicroGamePackage) and download it.
 ![](https://i.imgur.com/bcs5yWk.png)
-3. Choice the game you want, and import Unity package to your Unity Project. 
+4. Choice the game you want, and import Unity package to your Unity Project. 
     - Tutorial : [Importing local asset packages](https://docs.unity3d.com/Manual/AssetPackagesImport.html)
 ![](https://i.imgur.com/JaU3xi4.png)
-4. You can study the micro game in your Unity Project.
+5. You can study the micro game in your Unity Project.
 ![](https://i.imgur.com/raBmHSn.png)
 
 
@@ -50,11 +51,11 @@ I had already finished 14(23) microgame Unity package.
 ### MicroGame V2
 
 - Add time UI, Result Unity
-I had already finished 2(23) microgame V2 Unity package.
+I had already finished 3(23) microgame V2 Unity package.
 
 - Drumroll 
 - Whack 
-
+- ASMR
 
 ## License
 
