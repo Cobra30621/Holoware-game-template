@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameResultUI : MonoBehaviour
 {
-    public TextMeshProUGUI scoreText, outcomeText;
+    public TextMeshProUGUI scoreText,  scoreTextTitle, outcomeText;
     public bool showScore;
     
 
@@ -16,6 +16,7 @@ public class GameResultUI : MonoBehaviour
         gameObject.SetActive(true);
         scoreText.text =   $"{score}";
         scoreText.gameObject.SetActive(showScore);
+        scoreTextTitle.gameObject.SetActive(showScore);
         outcomeText.text = outcome;
     }
     public void Retry()

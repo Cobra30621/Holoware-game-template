@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 2283363281767935432}
   - component: {fileID: 2283363281767935433}
   m_Layer: 5
-  m_Name: Score Label
+  m_Name: ScoreTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1101,6 +1101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 2283363281784465338}
+  scoreTextTitle: {fileID: 2283363281767935433}
   outcomeText: {fileID: 2283363282237114286}
   showScore: 1
 --- !u!1 &2283363283312598511

@@ -33,7 +33,7 @@ public class MicroGameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    protected void Update()
+    protected virtual void Update()
     {
         Countdown();
     }
