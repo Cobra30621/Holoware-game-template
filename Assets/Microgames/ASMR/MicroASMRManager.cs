@@ -55,8 +55,7 @@ public class MicroASMRManager : MicroGameManager
             barOutline.color = Color.Lerp(barOutline.color, Color.black, 0.05f);
             yield return null;
         }
-        yield return new WaitForSeconds(1);
-        End();
+        End(1);
     }
 
     void Quack(float angle)

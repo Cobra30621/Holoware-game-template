@@ -40,8 +40,7 @@ public class MicroDrawManager : MicroGameManager
             cursor.position = Utils.GetMousePosition();
             yield return null;
         }
-        yield return new WaitForSeconds(1);
-        End();
+        End(1);
     }
 
     IEnumerator DrawCoroutine()

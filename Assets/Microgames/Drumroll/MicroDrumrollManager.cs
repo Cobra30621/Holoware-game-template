@@ -102,7 +102,7 @@ public class MicroDrumrollManager : MicroGameManager
             yield return null;
         }
 
-        End();
+        End(1);
     }
     
 }

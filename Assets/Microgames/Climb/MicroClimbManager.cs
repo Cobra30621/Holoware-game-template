@@ -23,8 +23,7 @@ public class MicroClimbManager :  MicroGameManager
     {
         
         yield return new  WaitUntil ( () => timer <= 0);
-        yield return new WaitForSeconds(1);
-        End();
+        End(1);
     }
         
 }
