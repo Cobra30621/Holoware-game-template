@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MicroDrawManager : MonoBehaviour
+public class MicroDrawManager : MicroGameManager
 {
     public SFXManager sfx;
     public AudioSource pencilSfx;
@@ -13,46 +13,21 @@ public class MicroDrawManager : MonoBehaviour
     [HideInInspector] public int nodeAmount, nodesCovered;
     int vertAmount, accurateVertAmount;
 
-    // Every MicroGame Method
-    [HideInInspector] public BGMManager bgm;
-    public float start_time = 10;
-    public float timer; 
-    public bool cleared; // a microgame is considered cleared if cleared = true
-    public bool timeOver; // once set to true, the microgame will exit; must be set manually if useStandardTimer = false
 
 
-    // Start is called before the first frame update
-    void Start()
+
+
+    public override void Game()
     {
+        base.Game();
         MicroDrawGuide guide = Instantiate(guides[Random.Range(0, guides.Length)], transform).GetComponent<MicroDrawGuide>();
         guide.microgame = this;
         guide.NodePrep();
-
-        bgm = GetComponent<BGMManager>();
-        timer = start_time;
-        Game();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Countdown();
-    }
-
-    void Countdown(){
-        if(timeOver){return;}
-
-        timer -= Time.deltaTime;
-        if(timer < 0){
-            timeOver = true;
-        }
-    }
-
-    public void Game()
-    {
         bgm.PlayBGM(0);
         StartCoroutine(GameCoroutine());
     }
+
+ 
 
     IEnumerator GameCoroutine()
     {
@@ -65,6 +40,8 @@ public class MicroDrawManager : MonoBehaviour
             cursor.position = Utils.GetMousePosition();
             yield return null;
         }
+        yield return new WaitForSeconds(1);
+        End();
     }
 
     IEnumerator DrawCoroutine()
@@ -125,6 +102,7 @@ public class MicroDrawManager : MonoBehaviour
             }
             yield return null;
         }
+        
     }
 
     void CheckAccuracy()
@@ -134,13 +112,8 @@ public class MicroDrawManager : MonoBehaviour
         {
             cleared = true;
             sfx.PlaySFX(0);
-            End();
         }
     }
 
-    [ContextMenu("Game End")]
-    public void End(){
-        Debug.Log("Game End");
-    }
 }
 

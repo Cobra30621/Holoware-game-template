@@ -13,6 +13,7 @@ public class MicroGameManager : MonoBehaviour
     public float beatLength = 0.5f;
     public bool cleared; // a microgame is considered cleared if cleared = true
     public bool timeOver; // once set to true, the microgame will exit
+    public bool gameEnd;
     public TimerUI timerUI ;
     public GameResultUI gameResultUI;
 
@@ -57,7 +58,12 @@ public class MicroGameManager : MonoBehaviour
     }
 
     [ContextMenu("Game End")]
-    public virtual void End(){
+    public virtual void End()
+    {
+        if (gameEnd)
+            return;
+        gameEnd = true;
+        
         if (cleared)
         {
             Debug.Log("Game End : Win");
