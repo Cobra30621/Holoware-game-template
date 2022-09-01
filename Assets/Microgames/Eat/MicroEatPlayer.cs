@@ -52,7 +52,7 @@ public class MicroEatPlayer : MonoBehaviour
                 sfx.PlaySFX(1);
                 bar.color = Color.green;
                 microgame.cleared = true;
-                microgame.End();
+                microgame.End(1);
             } else
             {
                 sfx.PlaySFX(0);
@@ -60,14 +60,20 @@ public class MicroEatPlayer : MonoBehaviour
         } else if (collision.tag == "Hazard")
         {
             Destroy(collision.gameObject);
-            sfx.PlaySFX(2);
-            sfx.PlaySFX(3);
-            bar.color = Color.red;
-            microgame.cleared = false;
-            canMove = false;
-            spriteRenderer.sprite = failSprite;
-            animator.SetTrigger("down");
-            microgame.End();
+            Fail();
         }
+    }
+
+    public void Fail()
+    {
+        
+        sfx.PlaySFX(2);
+        sfx.PlaySFX(3);
+        bar.color = Color.red;
+        microgame.cleared = false;
+        canMove = false;
+        spriteRenderer.sprite = failSprite;
+        animator.SetTrigger("down");
+        microgame.End(1);
     }
 }

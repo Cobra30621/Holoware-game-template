@@ -41,6 +41,8 @@ public class TimerUI : MonoBehaviour
                 ticks--;
                 iTween.ScaleFrom(timeLeft.gameObject, iTween.Hash("scale", new Vector3(0f, 0f, 1f), "time", microGameManager.beatLength / 2f, "easetype", iTween.EaseType.easeOutBack));
             }
+            if(microGameManager.gameEnd)
+                break;
             yield return null;
         }
         timeLeft.text = "";

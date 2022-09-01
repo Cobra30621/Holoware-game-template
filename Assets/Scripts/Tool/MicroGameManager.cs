@@ -58,25 +58,29 @@ public class MicroGameManager : MonoBehaviour
     }
 
     [ContextMenu("Game End")]
-    public virtual void End()
+    public virtual void End(float waitTime = 0)
     {
         if (gameEnd)
             return;
         gameEnd = true;
-        
+
+        StartCoroutine(EndCoroutine(waitTime));
+    }
+    
+    IEnumerator EndCoroutine(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
         if (cleared)
         {
             Debug.Log("Game End : Win");
             if(gameResultUI)
-                    gameResultUI.Show("Win", score);
+                gameResultUI.Show("Win", score);
         }
         else
         {
             Debug.Log("Game End : Lose");
-            if(gameResultUI)
+            if (gameResultUI)
                 gameResultUI.Show("Lose", score);
         }
-            
-        
     }
 }

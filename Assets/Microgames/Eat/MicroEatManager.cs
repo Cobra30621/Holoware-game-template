@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MicroEatManager : MonoBehaviour
+public class MicroEatManager : MicroGameManager
 {
     public MicroEatPlayer player;
     public MicroEatSet[] sets;
@@ -11,38 +11,9 @@ public class MicroEatManager : MonoBehaviour
     public int hazardInterval = 10;
     int playerID, dropsSpawned;
 
-    // Every MicroGame Method
-    [HideInInspector] public BGMManager bgm;
-    public float start_time = 10;
-    public float timer; 
-    public bool cleared; // a microgame is considered cleared if cleared = true
-    public bool timeOver; // once set to true, the microgame will exit
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        bgm = GetComponent<BGMManager>();
-        timer = start_time;
-        Game();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Countdown();
-    }
-
-    void Countdown(){
-        if(timeOver){return;}
-
-        timer -= Time.deltaTime;
-        if(timer < 0){
-            timeOver = true;
-        }
-    }
-
-    [ContextMenu("Game Start")]
-    public void Game(){
+    
+    public override void Game(){
+        base.Game();
         playerID = Random.Range(0, sets.Length);
         player.spriteRenderer.sprite = sets[playerID].run;
         player.failSprite = sets[playerID].fail;
@@ -72,6 +43,12 @@ public class MicroEatManager : MonoBehaviour
             }
             yield return new WaitForSeconds(dropInterval);
         }
+
+        if (!cleared)
+        {
+            player.Fail();
+        }
+        
     }
 
     [System.Serializable]
@@ -80,11 +57,5 @@ public class MicroEatManager : MonoBehaviour
         public GameObject drop;
     }
 
-    [ContextMenu("Game End")]
-    public void End(){
-        if(cleared)
-            Debug.Log("Game End : Win");
-        else
-            Debug.Log("Game End : Lose");
-    }
+
 }
