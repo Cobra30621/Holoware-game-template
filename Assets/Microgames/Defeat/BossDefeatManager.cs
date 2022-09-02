@@ -6,15 +6,8 @@ using TMPro;
 using Lean.Localization;
 using UnityEngine.Events;
 
-public class BossDefeatManager : MonoBehaviour
+public class BossDefeatManager : MicroGameManager
 {
-    // Every MicroGame Method
-    [HideInInspector] public BGMManager bgm;
-    public float start_time = 10;
-    public float timer; 
-    public bool cleared; // a microgame is considered cleared if cleared = true
-    public bool timeOver; // once set to true, the microgame will exit
-
     public RectTransform avatarArea;
     public List<GameObject> avatarSelection; // avatar prefabs can be found in Prefabs/Avatars
     [HideInInspector] public List<CharacterAvatar> avatars;
@@ -39,31 +32,10 @@ public class BossDefeatManager : MonoBehaviour
         }
     }
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        bgm = GetComponent<BGMManager>();
-        timer = start_time;
-        Game();
-    }
+    
 
-    // Update is called once per frame
-    void Update()
-    {
-        Countdown();
-    }
-
-    void Countdown(){
-        if(timeOver){return;}
-
-        timer -= Time.deltaTime;
-        if(timer < 0){
-            timeOver = true;
-        }
-    }
-
-    [ContextMenu("Game Start")]
-    public void Game(){
+    public override void Game(){
+        base.Game();
         AddAvatar(0);
         AddAvatar(2);
         AddAvatar(4);
@@ -145,7 +117,7 @@ public class BossDefeatManager : MonoBehaviour
             SetDescriptionLocalized("Defeat/Lose");
         }
 
-        End();
+        End(3);
         yield return new WaitForSeconds(3f);
         timeOver = true;
     }
