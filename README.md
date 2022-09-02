@@ -51,7 +51,7 @@ I had already finished 14(23) microgame Unity package.
 ### MicroGame V2
 
 - Add time UI, Result Unity
-I had already finished 8(23) microgame V2 Unity package.
+I had already finished 9(23) microgame V2 Unity package.
 - ASMR
 - Climb
 - Dance 
@@ -59,6 +59,7 @@ I had already finished 8(23) microgame V2 Unity package.
 - Draw
 - Drumroll 
 - Eat
+- Find 
 - Whack 
 
 

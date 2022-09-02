@@ -2,14 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MicroFindManager : MonoBehaviour
+public class MicroFindManager : MicroGameManager
 {
-    // Every MicroGame Method
-    [HideInInspector] public BGMManager bgm;
-    public float start_time = 10;
-    public float timer; 
-    public bool cleared; // a microgame is considered cleared if cleared = true
-    public bool timeOver; // once set to true, the microgame will exit
+    
     public SFXManager sfx;
     public int numberOfHeads = 25;
     public float scaleMult = 1f, spawnXBound = 6f, spawnYLowerBound = -3.5f, spawnYUpperBound = 4f;
@@ -17,33 +12,11 @@ public class MicroFindManager : MonoBehaviour
     public GameObject head;
     List<GameObject> heads;
     GameObject targetHead, clickedHead;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        bgm = GetComponent<BGMManager>();
-        timer = start_time;
+
+
+    public override void Game(){
+        base.Game();
         heads = new List<GameObject>();
-        Game();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Countdown();
-    }
-
-    void Countdown(){
-        if(timeOver){return;}
-
-        timer -= Time.deltaTime;
-        if(timer < 0){
-            timeOver = true;
-        }
-    }
-
-    [ContextMenu("Game Start")]
-    public void Game(){
         MicroFindHead newHead;
         for (int i = 0; i < numberOfHeads; i++)
         {
@@ -71,7 +44,7 @@ public class MicroFindManager : MonoBehaviour
 
     IEnumerator GameCoroutine()
     {
-        while (!cleared)
+        while (!cleared && !timeOver)
         {
             yield return null;
             if (Input.GetMouseButtonDown(0))
@@ -117,7 +90,6 @@ public class MicroFindManager : MonoBehaviour
                     {
                         sfx.PlaySFX(1);
                     }
-                    End();
 
                     for (int i = 0; i < heads.Count; i++)
                     {
@@ -127,20 +99,16 @@ public class MicroFindManager : MonoBehaviour
                         }
                     }
 
-                    // iTween.ScaleFrom(clickedHead,
-                    //     iTween.Hash("scale", clickedHead.transform.localScale * 1.2f, "time", 0.25f, "easetype",
-                    //         iTween.EaseType.easeOutBack));
+                    iTween.ScaleFrom(clickedHead,
+                        iTween.Hash("scale", clickedHead.transform.localScale * 1.2f, "time", 0.25f, "easetype",
+                            iTween.EaseType.easeOutBack));
+                    End(1);
                     yield break;
                 }
             }
         }
+        End(1);
     }
 
-    [ContextMenu("Game End")]
-    public void End(){
-        if(cleared)
-            Debug.Log("Game End : Win");
-        else
-            Debug.Log("Game End : Lose");
-    }
+ 
 }
