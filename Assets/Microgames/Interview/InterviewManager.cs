@@ -5,15 +5,8 @@ using UnityEngine.UI;
 using TMPro;
 using Lean.Localization;
 
-public class InterviewManager : MonoBehaviour
+public class InterviewManager : MicroGameManager
 {
-        // Every MicroGame Method
-    [HideInInspector] public BGMManager bgm;
-    public float start_time = 10;
-    public float timer; 
-    public bool cleared; // a microgame is considered cleared if cleared = true
-    public bool timeOver; // once set to true, the microgame will exit
-
     public SFXManager sfx;
     public float bpm = 136, safeBeats = 0.5f;
     public int lives = 3;
@@ -30,36 +23,13 @@ public class InterviewManager : MonoBehaviour
     List<int> setPool, availableCharacters, choices;
     public bool canSelect;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+
+    public override void Game(){
+        base.Game();
         buttonAvatars = new List<CharacterAvatar>();
         setPool = Utils.GenerateIndexPool(speechSetArray.sets.Length);
         availableCharacters = Utils.GenerateIndexPool(speechSetArray.sets.Length);
-
-
-        bgm = GetComponent<BGMManager>();
-        timer = start_time;
-        Game();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // Countdown();
-    }
-
-    void Countdown(){
-        if(timeOver){return;}
-
-        timer -= Time.deltaTime;
-        if(timer < 0){
-            timeOver = true;
-        }
-    }
-
-    [ContextMenu("Game Start")]
-    public void Game(){
+        
         matsuriAnimator.speed = bpm / 60f;
         SetNextEventTime(4);
         livesDisp.text = lives.ToString();
@@ -125,6 +95,7 @@ public class InterviewManager : MonoBehaviour
                 yield return null;
             }
             timeOver = true;
+            End(1);
             yield break;
         }
         SetMatsuriText("Interview/Intermission", true, false);
@@ -145,6 +116,8 @@ public class InterviewManager : MonoBehaviour
             if (lives == 0)
             {
                 livesDisp.color = Color.red;
+                timeOver = true;
+                End(1);
                 break;
             }
         }
@@ -170,6 +143,7 @@ public class InterviewManager : MonoBehaviour
                 yield return null;
             }
             timeOver = true;
+            End(1);
             yield break;
         }
         cleared = true;
@@ -178,6 +152,7 @@ public class InterviewManager : MonoBehaviour
         matsuriAnimator.SetTrigger("win");
         yield return new WaitForSeconds(3f);
         timeOver = true;
+        End(1);
     }
 
     IEnumerator FillButtons()
@@ -259,11 +234,4 @@ public class InterviewManager : MonoBehaviour
         }
     }
 
-    [ContextMenu("Game End")]
-    public void End(){
-        if(cleared)
-            Debug.Log("Game End : Win");
-        else
-            Debug.Log("Game End : Lose");
-    }
 }
